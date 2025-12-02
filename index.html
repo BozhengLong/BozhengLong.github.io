@@ -1,33 +1,93 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Name - Academic & Lifestyle Page</title>
+    <title>Bozheng Long - AI Product Manager</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header>
-        <nav>
-            <ul>
-                <li><a href="#academic">Academic</a></li>
-                <li><a href="#lifestyle">Lifestyle</a></li>
-            </ul>
-        </nav>
-    </header>
-    <main>
-        <section id="academic">
-            <h1>Academic</h1>
-            <!-- Academic content goes here -->
-        </section>
-        <section id="lifestyle">
-            <h1>Life</h1>
-            <!-- Lifestyle content goes here -->
-        </section>
-    </main>
+    <!-- Language Toggle -->
+    <button class="lang-toggle" id="langToggle" aria-label="Switch Language">EN</button>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1 class="name">Bozheng Long</h1>
+            <p class="title">AI Product Manager</p>
+            <p class="tagline" data-i18n="tagline">在成长中探索，在实践中学习</p>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about">
+        <div class="container">
+            <h2 data-i18n="about-title">关于我</h2>
+            <p class="about-text" data-i18n="about-text">
+                在学习如何成为一名优秀的产品经理。<br><br>
+
+                目前能做的：用 n8n 搭建AI自动化工作流优化业务流程，有时候能独立闭环一个完整需求。具有一定的产研结合能力。<br><br>
+
+                但我很清楚，这还不够。优秀的产品经理不只是"问题解决者"，更应该是"问题定义者"——能看透需求背后的真实问题，能重新定义问题本身。我还在这条路上。
+            </p>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section class="skills">
+        <div class="container">
+            <h2 data-i18n="skills-title">我现在能做什么</h2>
+            <div class="skill-grid">
+                <div class="skill-item">
+                    <h3 data-i18n="skill1-title">AI 自动化工作流</h3>
+                    <p data-i18n="skill1-desc">用 n8n 搭建自动化流程，提升业务效率</p>
+                </div>
+                <div class="skill-item">
+                    <h3 data-i18n="skill2-title">产研结合</h3>
+                    <p data-i18n="skill2-desc">理解技术实现，独立闭环业务需求</p>
+                </div>
+                <div class="skill-item">
+                    <h3 data-i18n="skill3-title">快速学习</h3>
+                    <p data-i18n="skill3-desc">拥抱新工具和技术，持续迭代认知</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Future Section -->
+    <section class="future">
+        <div class="container">
+            <h2 data-i18n="future-title">我在追求什么</h2>
+            <p class="future-text" data-i18n="future-text">
+                <strong>短期目标：</strong>从"问题解决者"成长为"问题定义者"。不仅要解决需求，更要理解需求背后的本质问题。<br><br>
+
+                <strong>长期愿景：</strong>深耕AI产品领域，打造真正解决用户痛点的产品。通过更多实践积累产品sense，建立系统的方法论。
+            </p>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact">
+        <div class="container">
+            <h2 data-i18n="contact-title">联系方式</h2>
+            <div class="contact-links">
+                <a href="mailto:im.bzlong@gmail.com" class="contact-item">
+                    <span>Email</span>
+                </a>
+                <a href="https://www.linkedin.com/in/bozheng-long/" target="_blank" class="contact-item">
+                    <span>LinkedIn</span>
+                </a>
+                <a href="https://github.com/BozhengLong" target="_blank" class="contact-item">
+                    <span>GitHub</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
     <footer>
-        <p>&copy; 2024 Your Name</p>
+        <p data-i18n="footer">&copy; 2025 Bozheng Long</p>
     </footer>
+
     <script src="script.js"></script>
 </body>
 </html>
