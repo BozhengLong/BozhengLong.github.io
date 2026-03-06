@@ -5,6 +5,11 @@
     box-sizing: border-box;
 }
 
+:root {
+    --accent-color: #2563eb;
+    --accent-hover: #1d4ed8;
+}
+
 body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'SF Pro Display', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
     color: #1a1a1a;
@@ -12,6 +17,18 @@ body {
     line-height: 1.7;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+}
+
+/* Scroll Progress Bar */
+.scroll-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 0%;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent-color), #60a5fa);
+    z-index: 9999;
+    transition: width 0.1s ease;
 }
 
 /* Language Toggle */
@@ -26,13 +43,18 @@ body {
     font-weight: 500;
     cursor: pointer;
     padding: 8px 12px;
-    transition: color 0.3s ease;
+    transition: all 0.3s ease;
     z-index: 1000;
     font-family: inherit;
 }
 
 .lang-toggle:hover {
     color: #1a1a1a;
+}
+
+.lang-toggle:focus {
+    outline: 2px solid var(--accent-color);
+    outline-offset: 4px;
 }
 
 .lang-toggle::after {
@@ -51,6 +73,20 @@ body {
     width: 60%;
 }
 
+/* Language switch animation */
+.lang-toggle.switching {
+    animation: langSwitch 0.4s ease;
+}
+
+@keyframes langSwitch {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(0.9) rotateY(180deg);
+    }
+}
+
 .container {
     max-width: 800px;
     margin: 0 auto;
@@ -65,6 +101,7 @@ body {
     justify-content: center;
     text-align: center;
     padding: 80px 0;
+    background: radial-gradient(ellipse at center, #fafafa 0%, #ffffff 70%);
 }
 
 .name {
@@ -73,6 +110,26 @@ body {
     letter-spacing: -0.02em;
     margin-bottom: 0.5rem;
     color: #000000;
+    position: relative;
+    display: inline-block;
+}
+
+.name::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent-color), #60a5fa);
+    opacity: 0;
+    animation: slideIn 0.8s ease 0.5s forwards;
+}
+
+@keyframes slideIn {
+    to {
+        opacity: 1;
+    }
 }
 
 .title {
@@ -88,6 +145,38 @@ body {
     max-width: 600px;
     margin: 0 auto;
     line-height: 1.8;
+    opacity: 0;
+    animation: fadeIn 0.8s ease 1.2s forwards;
+}
+
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+    }
+}
+
+/* Typing effect */
+.tagline.typing {
+    overflow: hidden;
+    border-right: 2px solid var(--accent-color);
+    white-space: nowrap;
+    animation: typing 2s steps(40) 1.5s forwards, blink 0.75s step-end infinite;
+}
+
+@keyframes typing {
+    from {
+        width: 0;
+    }
+    to {
+        width: 100%;
+        border-right: none;
+    }
+}
+
+@keyframes blink {
+    50% {
+        border-color: transparent;
+    }
 }
 
 /* About Section */
@@ -119,6 +208,18 @@ body {
 /* Skills Section */
 .skills {
     padding: 120px 0;
+    position: relative;
+}
+
+.skills::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #e5e5e5, transparent);
 }
 
 .skills h2 {
@@ -138,6 +239,36 @@ body {
 
 .skill-item {
     text-align: center;
+    padding: 32px 24px;
+    border-radius: 12px;
+    background: #fafafa;
+    border: 1px solid transparent;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.skill-item::before {
+    content: attr(data-number);
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--accent-color);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.skill-item:hover {
+    transform: translateY(-4px);
+    border-color: #e5e5e5;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+    background: #ffffff;
+}
+
+.skill-item:hover::before {
+    opacity: 1;
 }
 
 .skill-item h3 {
@@ -145,6 +276,11 @@ body {
     font-weight: 600;
     margin-bottom: 0.75rem;
     color: #1a1a1a;
+    transition: color 0.3s ease;
+}
+
+.skill-item:hover h3 {
+    color: var(--accent-color);
 }
 
 .skill-item p {
@@ -176,6 +312,18 @@ body {
 /* Contact Section */
 .contact {
     padding: 120px 0;
+    position: relative;
+}
+
+.contact::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #e5e5e5, transparent);
 }
 
 .contact h2 {
@@ -199,22 +347,38 @@ body {
     font-size: 1.125rem;
     font-weight: 500;
     position: relative;
-    transition: color 0.3s ease;
+    transition: all 0.3s ease;
+    padding: 8px 0;
+}
+
+.contact-item::before {
+    content: '→';
+    position: absolute;
+    left: -24px;
+    opacity: 0;
+    color: var(--accent-color);
+    transition: all 0.3s ease;
 }
 
 .contact-item::after {
     content: '';
     position: absolute;
-    bottom: -4px;
+    bottom: 0;
     left: 0;
     width: 0;
-    height: 1px;
-    background-color: #1a1a1a;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent-color), #60a5fa);
     transition: width 0.3s ease;
 }
 
 .contact-item:hover {
-    color: #666666;
+    color: var(--accent-color);
+    transform: translateX(8px);
+}
+
+.contact-item:hover::before {
+    opacity: 1;
+    left: -28px;
 }
 
 .contact-item:hover::after {
@@ -228,6 +392,91 @@ footer {
     background-color: #fafafa;
     color: #999999;
     font-size: 0.875rem;
+    position: relative;
+}
+
+/* Back to Top Button */
+.back-to-top {
+    position: fixed;
+    bottom: 40px;
+    right: 40px;
+    width: 48px;
+    height: 48px;
+    background: #1a1a1a;
+    color: #ffffff;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    z-index: 1000;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.back-to-top.visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+.back-to-top:hover {
+    background: var(--accent-color);
+    transform: translateY(-4px);
+    box-shadow: 0 6px 16px rgba(37, 99, 235, 0.3);
+}
+
+.back-to-top:focus {
+    outline: 2px solid var(--accent-color);
+    outline-offset: 4px;
+}
+
+.back-to-top:active {
+    transform: translateY(-2px);
+}
+
+/* Focus states for all interactive elements */
+a:focus,
+button:focus {
+    outline: 2px solid var(--accent-color);
+    outline-offset: 4px;
+}
+
+.contact-item:focus {
+    color: var(--accent-color);
+}
+
+/* Keyboard shortcut hint */
+.keyboard-hint {
+    position: fixed;
+    bottom: 100px;
+    right: 40px;
+    background: rgba(0, 0, 0, 0.8);
+    color: #ffffff;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    z-index: 1000;
+    pointer-events: none;
+}
+
+.keyboard-hint.visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+.keyboard-hint kbd {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-family: monospace;
+    margin: 0 2px;
 }
 
 /* Responsive Design */
@@ -244,6 +493,10 @@ footer {
 
     .name {
         font-size: 2.5rem;
+    }
+
+    .name::after {
+        height: 2px;
     }
 
     .title {
@@ -277,6 +530,13 @@ footer {
         gap: 32px;
         align-items: center;
     }
+
+    .back-to-top {
+        bottom: 24px;
+        right: 24px;
+        width: 44px;
+        height: 44px;
+    }
 }
 
 @media (max-width: 480px) {
@@ -295,4 +555,59 @@ footer {
     .container {
         padding: 0 20px;
     }
+
+    .skill-item {
+        padding: 24px 20px;
+    }
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+
+    .name::after {
+        animation: none;
+        opacity: 1;
+    }
+
+    .tagline {
+        animation: none;
+        opacity: 1;
+    }
+
+    .hero {
+        transform: none !important;
+        opacity: 1 !important;
+    }
+
+    .skill-item:hover {
+        transform: none;
+    }
+
+    .back-to-top:hover {
+        transform: none;
+    }
+
+    .contact-item:hover {
+        transform: none;
+    }
+}
+
+/* Performance optimizations */
+.skill-item,
+.contact-item,
+.back-to-top,
+.lang-toggle {
+    will-change: transform;
+}
+
+.scroll-progress {
+    will-change: width;
 }

@@ -44,6 +44,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Language toggle click event
     langToggle.addEventListener('click', function() {
+        // Add switching animation
+        langToggle.classList.add('switching');
+        setTimeout(() => {
+            langToggle.classList.remove('switching');
+        }, 400);
+
         currentLang = currentLang === 'zh' ? 'en' : 'zh';
         setLanguage(currentLang);
         localStorage.setItem('language', currentLang);
@@ -118,6 +124,80 @@ document.addEventListener('DOMContentLoaded', function () {
         if (hero && scrolled < window.innerHeight) {
             hero.style.transform = `translateY(${scrolled * 0.3}px)`;
             hero.style.opacity = 1 - (scrolled / window.innerHeight) * 0.5;
+        }
+    });
+
+    // Scroll Progress Bar
+    const scrollProgress = document.getElementById('scrollProgress');
+    let ticking = false;
+
+    window.addEventListener('scroll', function() {
+        if (!ticking) {
+            window.requestAnimationFrame(function() {
+                const windowHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+                const scrolled = (window.pageYOffset / windowHeight) * 100;
+                scrollProgress.style.width = scrolled + '%';
+                ticking = false;
+            });
+            ticking = true;
+        }
+    });
+
+    // Back to Top Button
+    const backToTop = document.getElementById('backToTop');
+    window.addEventListener('scroll', function() {
+        if (window.pageYOffset > 300) {
+            backToTop.classList.add('visible');
+        } else {
+            backToTop.classList.remove('visible');
+        }
+    });
+
+    backToTop.addEventListener('click', function() {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    });
+
+    // Keyboard shortcuts
+    const keyboardHint = document.getElementById('keyboardHint');
+    let hintTimeout;
+
+    function showKeyboardHint(message) {
+        keyboardHint.innerHTML = message;
+        keyboardHint.classList.add('visible');
+        clearTimeout(hintTimeout);
+        hintTimeout = setTimeout(() => {
+            keyboardHint.classList.remove('visible');
+        }, 2000);
+    }
+
+    document.addEventListener('keydown', function(e) {
+        // T key - Back to top
+        if (e.key === 't' || e.key === 'T') {
+            e.preventDefault();
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+            showKeyboardHint('Press <kbd>T</kbd> to go top');
+        }
+
+        // L key - Toggle language
+        if (e.key === 'l' || e.key === 'L') {
+            e.preventDefault();
+            langToggle.click();
+            showKeyboardHint('Press <kbd>L</kbd> to switch language');
+        }
+
+        // ? key - Show all shortcuts
+        if (e.key === '?') {
+            e.preventDefault();
+            const shortcuts = currentLang === 'zh'
+                ? '<kbd>T</kbd> 回到顶部 · <kbd>L</kbd> 切换语言'
+                : '<kbd>T</kbd> Top · <kbd>L</kbd> Language';
+            showKeyboardHint(shortcuts);
         }
     });
 });
